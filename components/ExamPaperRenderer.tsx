@@ -1,0 +1,76 @@
+import React from 'react';
+
+interface ExamPaperProps {
+  assignment: any;
+  targetRef: any;
+}
+
+export function ExamPaperRenderer({ assignment, targetRef }: ExamPaperProps) {
+  // Assuming assignment.generatedPaper exists, if not fallback to empty
+  const paper = assignment.generatedPaper || { sections: [] };
+
+  return (
+    <div ref={targetRef} id="print-paper" className="bg-white p-8 border text-black mx-auto max-w-4xl min-h-[1056px]">
+      {/* Header Info */}
+      <div className="text-center border-b-2 border-black pb-4 mb-6">
+        <h1 className="text-2xl font-bold uppercase">{assignment.schoolName || 'School Name'}</h1>
+        <h2 className="text-xl font-semibold mt-2">{assignment.subject} Examination</h2>
+        <div className="flex justify-between mt-4 text-sm font-semibold">
+          <span>Class: {assignment.className}</span>
+          <span>Time: {assignment.timeAllowed} Mins</span>
+          <span>Max Marks: {assignment.totalMarks || 100}</span>
+        </div>
+      </div>
+
+      {/* Student Details Fields */}
+      <div className="flex justify-between mb-8 text-sm">
+        <span>Name: ______________________</span>
+        <span>Roll No: __________________</span>
+        <span>Date: ____________________</span>
+      </div>
+
+      {/* Instructions */}
+      {(assignment.instructions || assignment.additionalInfo) && (
+        <div className="mb-6 text-sm italic border-l-2 border-black pl-3 py-1 bg-neutral-50/50 whitespace-pre-line">
+          <strong>Instructions:</strong>
+          {assignment.instructions && <div className="mt-1">{assignment.instructions}</div>}
+          {assignment.additionalInfo && assignment.additionalInfo !== assignment.instructions && (
+            <div className={assignment.instructions ? "mt-2 pt-2 border-t border-dashed border-neutral-200" : "mt-1"}>
+              {assignment.additionalInfo}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Sections */}
+      {paper.sections?.length > 0 ? (
+        paper.sections.map((section: any, idx: number) => (
+          <div key={idx} className="mb-8">
+            <h3 className="font-bold text-lg underline mb-2">{section.title}</h3>
+            {section.instruction && (
+              <p className="text-sm italic mb-4">{section.instruction}</p>
+            )}
+            
+            <div className="space-y-4">
+              {section.questions?.map((q: any, qIdx: number) => (
+                <div key={qIdx} className="flex justify-between items-start">
+                  <div className="flex gap-2">
+                    <span className="font-semibold">{qIdx + 1}.</span>
+                    <span>{q.question}</span>
+                  </div>
+                  <div className="text-sm font-semibold whitespace-nowrap ml-4">
+                    [{q.marks}]
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="text-center text-muted-foreground italic mt-12">
+          Paper is currently generating...
+        </div>
+      )}
+    </div>
+  );
+}
