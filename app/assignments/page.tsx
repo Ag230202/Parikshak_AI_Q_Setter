@@ -173,7 +173,7 @@ export default function AssignmentsPage() {
                           <div className="flex flex-wrap gap-4 mt-3 text-sm">
                             <div>
                               <p className="text-muted-foreground">Assigned</p>
-                              <p className="font-medium">{formatDate(assignment.assignedDate)}</p>
+                              <p className="font-medium">{formatDate(assignment.createdAt)}</p>
                             </div>
                             <div>
                               <p className="text-muted-foreground">Due</p>

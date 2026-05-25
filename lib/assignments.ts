@@ -64,7 +64,9 @@ export function formatFileSize(bytes: number): string {
 }
 
 export function formatDate(dateString: string): string {
+  if (!dateString) return 'Not set';
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return 'Not set';
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: '2-digit',
