@@ -12,7 +12,7 @@ export function Sidebar() {
         <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
           <span className="text-accent-foreground font-bold">V</span>
         </div>
-        <span className="text-xl font-bold text-sidebar-foreground">VedaAI</span>
+        <span className="text-xl font-bold text-sidebar-foreground">Parikshak</span>
       </div>
 
       {/* Create Assignment Button */}

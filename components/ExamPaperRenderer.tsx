@@ -30,15 +30,10 @@ export function ExamPaperRenderer({ assignment, targetRef }: ExamPaperProps) {
       </div>
 
       {/* Instructions */}
-      {(assignment.instructions || assignment.additionalInfo) && (
+      {assignment.instructions && (
         <div className="mb-6 text-sm italic border-l-2 border-black pl-3 py-1 bg-neutral-50/50 whitespace-pre-line">
           <strong>Instructions:</strong>
-          {assignment.instructions && <div className="mt-1">{assignment.instructions}</div>}
-          {assignment.additionalInfo && assignment.additionalInfo !== assignment.instructions && (
-            <div className={assignment.instructions ? "mt-2 pt-2 border-t border-dashed border-neutral-200" : "mt-1"}>
-              {assignment.additionalInfo}
-            </div>
-          )}
+          <div className="mt-1">{assignment.instructions}</div>
         </div>
       )}
 
@@ -54,9 +49,26 @@ export function ExamPaperRenderer({ assignment, targetRef }: ExamPaperProps) {
             <div className="space-y-4">
               {section.questions?.map((q: any, qIdx: number) => (
                 <div key={qIdx} className="flex justify-between items-start">
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full">
                     <span className="font-semibold">{qIdx + 1}.</span>
-                    <span>{q.question}</span>
+                    <div className="flex flex-col">
+                      <span>{q.question}</span>
+                      {q.hasDiagram && q.diagramSvg && (
+                        <div 
+                          className="mt-4 mb-2 max-w-md [&>svg]:w-full [&>svg]:h-auto border border-gray-300 rounded p-2" 
+                          dangerouslySetInnerHTML={{ __html: q.diagramSvg }} 
+                        />
+                      )}
+                      {q.options && q.options.length > 0 && (
+                        <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
+                          {q.options.map((opt: string, optIdx: number) => (
+                            <div key={optIdx}>
+                              {String.fromCharCode(97 + optIdx)}) {opt}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div className="text-sm font-semibold whitespace-nowrap ml-4">
                     [{q.marks}]

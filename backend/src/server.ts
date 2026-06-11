@@ -30,7 +30,7 @@ import './workers/generationWorker';
 app.use('/api/assignments', assignmentRoutes);
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/vedaai';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/parikshak';
 
 mongoose.connect(MONGO_URI)
   .then(() => {

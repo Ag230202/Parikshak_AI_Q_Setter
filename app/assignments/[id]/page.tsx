@@ -271,7 +271,18 @@ export default function AssignmentDetailPage() {
         {/* Exam Paper Sheet (Right 2 Columns) */}
         <div className="lg:col-span-2 space-y-4">
           
-          {(assignment.status === 'generating' || assignment.status === 'pending') ? (
+          {assignment.status === 'failed' ? (
+            <Card className="bg-destructive/10 border-destructive shadow-md min-h-[450px] flex items-center justify-center">
+              <CardContent className="p-8 max-w-md w-full text-center space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold text-destructive">AI Generation Failed</h3>
+                  <p className="text-sm text-foreground">
+                    The AI model is experiencing issues or high demand. This assignment will be deleted shortly so you can try again.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          ) : (assignment.status === 'generating' || assignment.status === 'pending') ? (
             <Card className="bg-card border-border shadow-md min-h-[450px] flex items-center justify-center">
               <CardContent className="p-8 max-w-md w-full text-center space-y-6">
                 
@@ -283,7 +294,7 @@ export default function AssignmentDetailPage() {
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-foreground">AI Generation In Progress</h3>
                   <p className="text-sm text-muted-foreground">
-                    VedaAI is building a highly structured, syllabus-aligned examination sheet.
+                    Parikshak is building a highly structured, syllabus-aligned examination sheet.
                   </p>
                 </div>
 

@@ -14,7 +14,7 @@ export function Header() {
           <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
             <span className="text-accent-foreground font-bold text-sm">V</span>
           </div>
-          <span className="font-bold text-foreground">VedaAI</span>
+          <span className="font-bold text-foreground">Parikshak</span>
         </div>
 
         {/* Right side */}

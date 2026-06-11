@@ -30,7 +30,7 @@ export default function HomePage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to VedaAI</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to Parikshak</h1>
         <p className="text-muted-foreground">Manage your assignments and track student progress</p>
       </div>
 

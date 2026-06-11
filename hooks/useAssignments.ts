@@ -23,6 +23,13 @@ export function useAssignments() {
       setAssignments(mapped);
     } catch (error) {
       console.error('Failed to fetch assignments:', error);
+      import('@/hooks/use-toast').then(({ toast }) => {
+        toast({
+          title: 'Error',
+          description: 'Failed to fetch assignments. Please try again later.',
+          variant: 'destructive',
+        });
+      });
     } finally {
       setLoading(false);
     }
@@ -71,13 +78,27 @@ export function useAssignments() {
       }
     });
 
-    socket.on('generation-failed', ({ assignmentId }) => {
+    socket.on('generation-failed', ({ assignmentId, error }) => {
       console.log(`Generation failed for ${assignmentId}`);
+      if (error) {
+        import('@/hooks/use-toast').then(({ toast }) => {
+          toast({
+            title: 'Generation Failed',
+            description: error,
+            variant: 'destructive',
+          });
+        });
+      }
       setAssignments((prev) =>
-        prev.map((a) =>
-          a.id === assignmentId || (a as any)._id === assignmentId ? { ...a, status: 'failed' } : a
-        )
+        prev.map((a) => (a.id === assignmentId || (a as any)._id === assignmentId ? { ...a, status: 'failed' } : a))
       );
+
+      // Remove from local state after 10 seconds
+      setTimeout(() => {
+        setAssignments((prev) =>
+          prev.filter((a) => a.id !== assignmentId && (a as any)._id !== assignmentId)
+        );
+      }, 10000);
     });
 
     return () => {
@@ -100,6 +121,13 @@ export function useAssignments() {
       return newAssignment;
     } catch (error) {
       console.error('Failed to create assignment:', error);
+      import('@/hooks/use-toast').then(({ toast }) => {
+        toast({
+          title: 'Error',
+          description: 'Failed to create assignment. Please check your connection and try again.',
+          variant: 'destructive',
+        });
+      });
       throw error;
     }
   }, []);
@@ -117,6 +145,13 @@ export function useAssignments() {
       return updated;
     } catch (error) {
       console.error('Failed to update assignment:', error);
+      import('@/hooks/use-toast').then(({ toast }) => {
+        toast({
+          title: 'Error',
+          description: 'Failed to update assignment. Please try again.',
+          variant: 'destructive',
+        });
+      });
       // Fallback update local state on failure
       setAssignments((prev) =>
         prev.map((a) => (a.id === id || (a as any)._id === id ? { ...a, ...data } : a))
@@ -131,6 +166,13 @@ export function useAssignments() {
       setAssignments((prev) => prev.filter((a) => a.id !== id && (a as any)._id !== id));
     } catch (error) {
       console.error('Failed to delete assignment:', error);
+      import('@/hooks/use-toast').then(({ toast }) => {
+        toast({
+          title: 'Error',
+          description: 'Failed to delete assignment. Please try again.',
+          variant: 'destructive',
+        });
+      });
       throw error;
     }
   }, []);

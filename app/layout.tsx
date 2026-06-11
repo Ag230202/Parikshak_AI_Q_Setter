@@ -11,7 +11,7 @@ const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
-  title: 'VedaAI - Assignment Management',
+  title: 'Parikshak - Assignment Management',
   description: 'Create and manage assignments with AI-powered grading assistance',
   generator: 'v0.app',
   icons: {
